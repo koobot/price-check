@@ -5,6 +5,12 @@ Scrap prices from website
 - Put into good sheets
 - Keep scraping periodically?
 
+sources:
+https://towardsdatascience.com/looking-for-a-house-build-a-web-scraper-to-help-you-5ab25badc83e
+https://towardsdatascience.com/scraping-multiple-amazon-stores-with-python-5eab811453a8
+https://medium.com/analytics-vidhya/scraping-car-prices-using-python-97086c30cd65
+
+
 ---
 
 ## Pre-reqs
