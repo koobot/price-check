@@ -16,9 +16,13 @@ https://medium.com/analytics-vidhya/scraping-car-prices-using-python-97086c30cd6
 ## Pre-reqs
 
 ## Installing
-- In anaconda prompt `conda env create --name price-check --file /requirements.yml`
-- `conda create --name price-check --file requirements.txt`
+- In anaconda prompt `conda env create --name price-check --file requirements.yml`
 
 ## Export environment
-- `conda env export --name price-check --file /requirements.yml`
-- `conda list --export > requirements.txt`
+- `conda env export --name price-check --file requirements.yml`
+
+---
+
+## Todo
+- Add error handling
+- Add some input csv list thingo
