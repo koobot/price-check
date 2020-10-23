@@ -1,19 +1,30 @@
-# Scrape
+# Scrapes from Pet Circle
 
 from bs4 import BeautifulSoup
 from requests import get
 import datetime
+import csv
+import os
 
+#################################################################################
 # Define header to pass any blocks
 headers = (
         {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0'}
         )
 
 # Pages with prices to scrape
+# CHANGE TO CSV OR EXTERNAL LIST IN FUTURE
 urls = [
         'https://www.petcircle.com.au/product/royal-canin-kitten-instinctive-jelly-wet-cat-food-pouches/ac94bvo4x',
+        'https://www.petcircle.com.au/product/royal-canin-kitten-instinctive-gravy-wet-cat-food-pouches/rcvp031',
+        'https://www.petcircle.com.au/product/rufus-and-coco-wee-kitty-clumping-corn-litter/rcclcl8ms',
         ]
 
+# Output
+# CHANGE TO EXTERNAL LIST IN FUTURE
+csv_output_path = "D:/Documents/Python/price-check/output/pet-circle.csv"
+
+#################################################################################
 def get_html_soup(url, header):
     """ Returns soup object """
     response = get(url, headers=header)
@@ -27,7 +38,7 @@ def get_price_container(soup_object, html_tag, tag_class):
     price_container = soup_object.find_all(html_tag, class_=tag_class)
     return(price_container)
 
-def make_data_row(item_name, scrape_datetime, soup_result_item):
+def make_data_row(url, item_name, scrape_datetime, soup_result_item):
     """ Returns dictionary """
     # Dates and times
     scrape_date = scrape_datetime.date().isoformat()
@@ -35,12 +46,13 @@ def make_data_row(item_name, scrape_datetime, soup_result_item):
     scrape_time = scrape_datetime.time().isoformat() 
     # Price data
     product_size = soup_result_item.get("data-displayname")
-    sku_id = soup_result_item.get("data=sku")
+    sku_id = soup_result_item.get("data-sku")
     autodelivery_price = soup_result_item.get("data-adprice")
     standard_price = soup_result_item.get("data-price")
     sold_out = soup_result_item.get("data-issoldout")
     # Altogether
     data_row = {
+            'url': url,
             'scrape_date': scrape_date,
             'scrape_weekday': scrape_weekday,
             'scrape_time': scrape_time,
@@ -52,6 +64,37 @@ def make_data_row(item_name, scrape_datetime, soup_result_item):
             'sold_out': sold_out,
             }
     return(data_row)
+
+def output_csv(data, csv_path):
+    """ Appends the output
+    currently CSV """
+    col_names = [
+        'url',
+        'scrape_date',
+        'scrape_weekday',
+        'scrape_time',
+        'product_name',
+        'product_size',
+        'sku_id',
+        'autodelivery_price',
+        'standard_price',
+        'sold_out',
+            ]
+
+    # File doesn't exist
+    needs_header = not os.path.exists(csv_path)
+
+    with open(csv_path, mode='a', newline='') as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=col_names)
+        
+        if needs_header:
+            writer.writeheader()
+
+        for row in data:
+            writer.writerow(row)
+
+
+#################################################################################
 
 def main():
     print(headers)
@@ -68,11 +111,15 @@ def main():
                                               tag_class = "sku-option")
 
         for item in price_container:
-            new_row = make_data_row(item_name = product_name,
+            new_row = make_data_row(url = u,
+                                    item_name = product_name,
                                     scrape_datetime = scrape_dt,
                                     soup_result_item = item)
             price_data.append(new_row)
 
     print(price_data)
+
+    output_csv(data = price_data,
+               csv_path = csv_output_path)
 
 main()
