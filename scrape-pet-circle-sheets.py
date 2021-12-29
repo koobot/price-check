@@ -139,7 +139,7 @@ def main():
 
     print(price_data)
 
-    # Get data ready for Google Sheets API
+    # Get data ready for Google Sheets API ------------------------
     # List
     sheets_values = list()
 
@@ -158,6 +158,7 @@ def main():
         # Call the Sheets API
         sheet = service.spreadsheets()
 
+        # Appends the data
         result = service.spreadsheets().values().append(
             spreadsheetId=SPREADSHEET_ID,
             range=SPREADSHEET_RANGE,

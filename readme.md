@@ -11,6 +11,7 @@ Scrape prices from Pet Circle to monitor prices of cat food and kitty litter.
 ## Google sheets API
 
 - If running the `scrape-pet-circle-sheets.py` this will interface with the Google Sheets API.
+- Note to self: [appending values reference](https://developers.google.com/sheets/api/guides/values#appending_values)
 
 sources:
 https://towardsdatascience.com/looking-for-a-house-build-a-web-scraper-to-help-you-5ab25badc83e
