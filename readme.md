@@ -41,4 +41,5 @@ https://medium.com/analytics-vidhya/scraping-car-prices-using-python-97086c30cd6
 - Add some input csv list thingo
 - Combine the output csv and google sheets into one big script
 - Work out how to do the OAuth stuff in a secure way
+- Make urls paths relative path (as opposed to absolute)
 - Long term plan - move from local output to SqlLite
