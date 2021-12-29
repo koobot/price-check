@@ -25,7 +25,8 @@ HEADERS = (
         )
 
 # Pages with prices to scrape
-# CHANGE TO CSV OR EXTERNAL LIST IN FUTURE
+with open(r"D:\Documents\Python\price-check\urls.txt") as f:
+    URLS = f.read().splitlines()
 URLS = [
         'https://www.petcircle.com.au/product/royal-canin-kitten-instinctive-jelly-wet-cat-food-pouches/ac94bvo4x',
         'https://www.petcircle.com.au/product/royal-canin-kitten-instinctive-gravy-wet-cat-food-pouches/rcvp031',
